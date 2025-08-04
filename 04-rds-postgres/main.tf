@@ -10,7 +10,9 @@ resource "aws_db_instance" "default" {
   skip_final_snapshot  = true
 }
 
-resource "aws_db_subnet_group" "default" {
-  name       = "my-db-subnet-group"
-  subnet_ids = var.private_subnet_ids
+resource "aws_db_subnet_group" "rds_subnet_group" {
+  name       = "rds-subnet-group"
+  subnet_ids = local.private_subnet_ids_list
+  tags = var.tags
 }
+

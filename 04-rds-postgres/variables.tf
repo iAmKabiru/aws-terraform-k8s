@@ -13,6 +13,10 @@ variable "private_subnet_ids" {
   description = "List of private subnet IDs"
 }
 
+locals {
+  private_subnet_ids_list = split(",", var.private_subnet_ids)
+}
+
 variable "db_password" {
   type      = string
   sensitive = true
