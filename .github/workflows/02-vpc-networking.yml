@@ -1,11 +1,3 @@
-name: 02 - VPC Networking
-
-on:
-  push:
-    paths:
-      - '02-vpc-networking/**'
-      - '.github/workflows/02-vpc-networking.yml'
-
 jobs:
   terraform:
     name: Terraform Apply
@@ -18,6 +10,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-north-1
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
