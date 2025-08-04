@@ -8,9 +8,9 @@ variable "rds_security_group_id" {
   description = "Security group for RDS instances"
 }
 
-variable "private_subnet_ids" {
-  type        = list(string)
-  description = "List of private subnet IDs"
+variable "private_subnet_id" {
+  type        = string
+  description = "Single private subnet ID"
 }
 
 variable "db_password" {
