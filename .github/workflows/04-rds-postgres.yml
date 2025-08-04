@@ -1,0 +1,48 @@
+name: 04 - RDS Postgres
+
+on:
+  push:
+    paths:
+      - '04-rds-postgres/**'
+      - '.github/workflows/04-rds-postgres.yml'
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: 04-rds-postgres
+
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: eu-north-1
+      PRIVATE_SUBNET_IDS: ${{ secrets.PRIVATE_SUBNET_IDS }}
+      RDS_SG_ID: ${{ secrets.RDS_SECURITY_GROUP_ID }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6.6
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        run: terraform plan -var="private_subnet_ids=[${{ env.PRIVATE_SUBNET_IDS }}]" -var="rds_security_group_id=${{ env.RDS_SG_ID }}" -var="db_password=${{ env.DB_PASSWORD }}"
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve -var="private_subnet_ids=[${{ env.PRIVATE_SUBNET_IDS }}]" -var="rds_security_group_id=${{ env.RDS_SG_ID }}" -var="db_password=${{ env.DB_PASSWORD }}"
