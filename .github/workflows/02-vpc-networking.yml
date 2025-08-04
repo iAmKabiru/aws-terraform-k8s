@@ -1,3 +1,11 @@
+name: 02-vpc-networking
+
+on:
+  push:
+    paths:
+      - '02-vpc-networking/**'
+      - '.github/workflows/02-vpc-networking.yml'
+
 jobs:
   terraform:
     name: Terraform Apply
