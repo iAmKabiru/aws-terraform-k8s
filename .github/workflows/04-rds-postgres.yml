@@ -37,7 +37,7 @@ jobs:
           terraform plan \
             -var="ec2_security_group_id=${EC2_SECURITY_GROUP_ID}" \
             -var="rds_security_group_id=${RDS_SECURITY_GROUP_ID}" \
-            -var='private_subnet_ids=${PRIVATE_SUBNET_IDS}' \
+            -var="private_subnet_ids=${PRIVATE_SUBNET_IDS}" \
             -var="db_password=${DB_PASSWORD}"
 
       - name: Terraform Apply (auto-approve)
@@ -46,5 +46,5 @@ jobs:
           terraform apply -auto-approve \
             -var="ec2_security_group_id=${EC2_SECURITY_GROUP_ID}" \
             -var="rds_security_group_id=${RDS_SECURITY_GROUP_ID}" \
-            -var='private_subnet_ids=${PRIVATE_SUBNET_IDS}' \
+            -var="private_subnet_ids=${PRIVATE_SUBNET_IDS}" \
             -var="db_password=${DB_PASSWORD}"
