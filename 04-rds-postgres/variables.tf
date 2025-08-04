@@ -1,48 +1,71 @@
 variable "region" {
-  default = "eu-north-1"
+  description = "AWS region"
+  type        = string
+  default     = "eu-north-1"
 }
 
 variable "private_subnet_ids" {
-  type        = list(string)
-  description = "List of private subnet IDs for RDS subnet group"
+  description = "Comma-separated list of private subnet IDs"
+  type        = string
 }
 
 variable "rds_security_group_id" {
-  type        = string
   description = "Security group ID to associate with RDS"
+  type        = string
 }
 
 variable "db_identifier" {
-  type    = string
-  default = "my-postgres-db"
+  description = "The RDS instance identifier"
+  type        = string
+  default     = "my-postgres-db"
 }
 
 variable "allocated_storage" {
-  type    = number
-  default = 20
+  description = "Allocated storage in GB"
+  type        = number
+  default     = 20
 }
 
 variable "engine_version" {
-  type    = string
-  default = "15.3"
+  description = "Postgres engine version"
+  type        = string
+  default     = "15.3"
 }
 
 variable "instance_class" {
-  type    = string
-  default = "db.t3.micro"
+  description = "RDS instance class"
+  type        = string
+  default     = "db.t3.micro"
 }
 
 variable "db_name" {
-  type    = string
-  default = "mydatabase"
+  description = "Database name"
+  type        = string
+  default     = "mydatabase"
 }
 
 variable "db_username" {
-  type    = string
-  default = "admin"
+  description = "Database username"
+  type        = string
+  default     = "admin"
 }
 
 variable "db_password" {
-  type      = string
-  sensitive = true
+  description = "Database password"
+  type        = string
+  sensitive   = true
+}
+
+variable "tags" {
+  description = "Tags to apply to all resources"
+  type        = map(string)
+  default = {
+    Environment = "dev"
+    Owner       = "kabiru"
+    Project     = "terraform-series"
+  }
+}
+
+locals {
+  private_subnet_ids_list = split(",", var.private_subnet_ids)
 }
