@@ -1,14 +1,18 @@
-name: Terraform Apply
+name: 04 - RDS PostgreSQL
 
 on:
   push:
-    branches:
-      - main
+    paths:
+      - '04-rds-postgres/**'
+      - '.github/workflows/04-rds-postgres.yml'
 
 jobs:
   terraform:
-    name: Terraform Plan & Apply
     runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: 04-rds-postgres
 
     env:
       EC2_SECURITY_GROUP_ID: ${{ secrets.EC2_SECURITY_GROUP_ID }}
