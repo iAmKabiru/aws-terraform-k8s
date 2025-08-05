@@ -10,3 +10,5 @@ resource "aws_instance" "ecommerce_instance" {
     Name = var.instance_name
   }
 }
+
+//
